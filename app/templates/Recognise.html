@@ -1,0 +1,120 @@
+{%extends "base.html"%}
+{%import "bootstrap/wtf.html" as wtf%}
+{%block title%}Recognise{%endblock%}
+
+{%block styles %}
+<style>
+.Divide{
+	background-color:#D94A38;
+	width:600px;
+	height:400px;
+	position:relative;
+	top:200px;
+	left:200px;
+}
+
+.Show{
+	background-color:#aaaaaa;
+	width:100px;
+	height:400px;
+	position:fixed;
+	top:200px;
+	left:1000px;
+}
+
+.Picture{
+	top:0px;
+	left:0px;
+	width:1140px;
+	height:400px;
+	position:relative;
+}
+</style>
+{{super()}}
+{%endblock %}
+
+{%block scripts %}
+{{super()}}
+<script>	
+function cnvs_getCoordinates(e){	
+	const Picture = document.querySelector('#UploadPicture');
+	const picRect=Picture.getBoundingClientRect();
+	
+	var Position={
+		posLeft:e.clientX,posTop:e.clientY,
+		picLeft:picRect.left,picTop:picRect.top,
+		picWidth:picRect.width,picHeight:picRect.height
+	};
+	/*
+	console.log(Position)
+	*/
+	
+	var url="/Recognise";
+	/*
+	$.post(url,Position);
+	*/
+	$.ajax({
+		type: "POST",
+		url: url,
+		data: Position,
+		dataType: "json",
+		success: function (str) {
+			document.getElementById("HSV").innerHTML = "Hue:"+str.Hue+" Saturation:"+str.Saturation+" Value:"+str.Value;
+			document.getElementById("RecognisePicture").src="/static/_Import/Filter.PNG?"+Math.random();
+		},
+		error: function (e) {
+		/*
+			alert('something wrong');
+		*/
+			alert(e.Hue)
+		},
+		beforeSend: function() {
+			// 發送中                
+		}
+	});
+        
+	
+	
+	/*
+	document.getElementById("xPos").innerHTML=e.clientX;
+	document.getElementById("yPos").innerHTML=e.clientY;
+	*/
+}
+
+/*
+function getLeftTopLocation(){
+	var Left=$(".Divide").css("left")
+	var Top=$(".Divide").css("top")
+	document.getElementById("Region").innerHTML=Left+" "+Top;
+}
+*/
+</script>
+{%endblock %}
+
+{%block Uploadform_content%}
+	{{wtf.quick_form(Uploadform)}}
+{%endblock%}
+
+{%block Uploadresult_content%}
+	<img class="Picture" id="UploadPicture" src={{ImgLocation}} onclick="cnvs_getCoordinates(event)">
+{%endblock%}
+
+{%block Recogniseform_content%}
+<p id="HSV">HSV: Saturation: Value:</p>
+{{wtf.quick_form(Smoothform)}}
+{%endblock%}
+
+
+{%block Recognise_content%}
+	<img class="Picture" id="RecognisePicture" src={{RecogniseLocation}}>
+{%endblock%}
+ 
+
+{%block Padding_content%}
+	<img class="Picture" id="SmoothPicture" src={{SmoothLocation}}>
+{%endblock%}
+{%block Paddingform_content%}
+{{wtf.quick_form(ExbedAxesform)}}
+{%endblock%}
+
+

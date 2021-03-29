@@ -1,0 +1,55 @@
+{% extends "bootstrap/base.html" %}
+
+{% block title %}Flasky{% endblock %}
+
+{%block styles %}
+
+{{super()}}
+{%endblock %}
+
+{%block navbar %}
+<div class="navbar navbar-inverse" role="navigation">
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" 
+			 data-toggle="collapse" data-target=".navbar-collapse">
+				<span class="sr-only"> Toggle navigation </span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="/">Flasky</a>
+		</div>
+		<div class="navbar-collapse collapse">
+			<ul class="nav navbar-nav">
+				<li><a href="/Recognise">Recognise</a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+{%endblock%}
+
+{%block content%}
+	<h1 class="container">RECOGNITION</h1>
+	<div class="container" style="background-color:#eeeeee;Position:relative;top:0px;left:0px;height:100px;weight:200px;">
+		{%block Uploadform_content%}{%endblock%}
+	</div>
+
+	<div class="container" style="background-color:#D94A38;Position:relative;top:0px;left:0px;height:400px;weight:200px;">
+		{%block Uploadresult_content%}{%endblock%}
+	</div>
+	<div class="container" style="background-color:#D94A38;">
+		{%block Recognise_content%}{%endblock%}
+	</div>
+	<hr>
+	<h1 class="container">NUMERIZE</h1>
+	<div class="container" style="background-color:#eeeeee">
+		{%block Recogniseform_content%}{%endblock%}
+	</div>
+	<div class="container" style="background-color:#D94A38;">
+		{%block Padding_content%}{%endblock%}
+	</div>
+	<div class="container" style="background-color:#eeeeee">
+		{%block Paddingform_content%}{%endblock%}
+	</div>
+{%endblock%}
